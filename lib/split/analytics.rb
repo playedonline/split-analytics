@@ -26,9 +26,13 @@ module Split
     end
 
     def custom_variables
-      return nil if session[:split].nil?
+      return nil if cookies[:split].nil?
       arr = []
-      session[:split].each_with_index do |h,i|
+
+      cookie_val = cookies[:split] || Hash.new.to_json
+      hsh = JSON.parse(cookie_val)
+
+      hsh.each_with_index do |h,i|
         arr << "_gaq.push(['_setCustomVar', #{i+1}, '#{h[0]}', '#{h[1]}', 1]);"
       end
       arr.reverse[0..4].reverse.join("\n")
