@@ -34,6 +34,7 @@ module Split
 
       hsh.each_with_index do |h,i|
         arr << "_gaq.push(['_setCustomVar', #{i+1}, '#{h[0]}', '#{h[1]}', 1]);"
+        arr << "_gaq.push(['_trackEvent', 'Conversion', '#{h[0]}_#{h[1]}']);"
       end
       arr.reverse[0..4].reverse.join("\n")
     end
